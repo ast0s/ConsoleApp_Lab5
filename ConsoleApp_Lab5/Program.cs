@@ -12,11 +12,10 @@ namespace ConsoleApp_Lab5
     internal class Program
     {
         static Random r = new Random();
+        static List<User> users = new List<User>();
 
         static void Main(string[] args)
         {
-            List<User> users = new List<User>();
-
             try
             {
                 bool flag = true;
@@ -47,6 +46,15 @@ namespace ConsoleApp_Lab5
                 }
                 Console.WriteLine();
                 PrintAll(users);
+
+                int seekId = -1;
+                while (seekId != 0)
+                {
+                    Console.Write("Enter user id: ");
+                    seekId = int.Parse(Console.ReadLine());
+
+                    PrintUsers(seekId);
+                }
             }
             catch (Exception)
             {
@@ -75,6 +83,13 @@ namespace ConsoleApp_Lab5
                     Console.WriteLine($"{device.Sensor.Type}\t{device.Sensor.StartRangeMeasure}\t{device.Sensor.EndRangeMeasure}\t{device.Sensor.Value}\n");
                 }
             }
+        }
+        static public void PrintUsers(int seekId)
+        {
+            List<User> foundUsers = users.Where(x => x.Id == seekId).ToList();
+
+            foreach (User user in foundUsers)
+                Console.WriteLine($"{user.Id}\t{user.Username}\t{user.Password}\t{user.Email}\t{user.Phone}\t{user.MC}\n");
         }
     }
 }
